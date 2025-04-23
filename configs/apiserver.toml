@@ -1,2 +1,5 @@
 bind_addr = ":8080"
 log_level = "debug"
+
+[store]
+database_url = "postgresql://neondb_owner:npg_vLZk0EBgbNd8@ep-misty-hat-a4iudp85-pooler.us-east-1.aws.neon.tech/neondb?sslmode=require"
