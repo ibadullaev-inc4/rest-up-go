@@ -13,9 +13,7 @@ func TestUserRepository_Create(t *testing.T) {
 	s, teaddown := store.TestStore(t, databaseURL)
 	defer teaddown("users")
 
-	user, err := s.User().Create(&model.User{
-		Email: "user@email.org",
-	})
+	user, err := s.User().Create(model.TestUser(t))
 	assert.NoError(t, err)
 	assert.NotNil(t, user)
 }
@@ -29,11 +27,11 @@ func TestUserRepository_FindByEmail(t *testing.T) {
 	_, err := s.User().FindByEmail(email)
 	assert.Error(t, err)
 
-	s.User().Create(&model.User{
-		Email: "user@email.org",
-	})
+	u := model.TestUser(t)
+	u.Email = email
+	s.User().Create(u)
 
-	user, err := s.User().FindByEmail("user@email.org")
+	user, err := s.User().FindByEmail(email)
 	assert.NoError(t, err)
 	assert.NotNil(t, user)
 
